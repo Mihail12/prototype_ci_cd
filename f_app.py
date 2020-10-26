@@ -143,11 +143,3 @@ def on_room(*args, **kwargs):
 @socketio.on('join_room', namespace='/schedule_task')
 def on_room(*args, **kwargs):
     print('connected schedule_task')
-
-
-if __name__ == "__main__":
-
-    import logging
-    logging.basicConfig(filename='error.log', level=logging.DEBUG)
-
-    socketio.run(flask_app, debug=True, host="0.0.0.0")
