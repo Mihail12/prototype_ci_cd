@@ -1,6 +1,5 @@
 from datetime import timedelta
 
-from celery.schedules import crontab
 
 CELERYBEAT_SCHEDULE = {
     'test-celery': {

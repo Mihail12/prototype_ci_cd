@@ -1,6 +1,6 @@
 import os
 import sys
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 
 
 from .base import BaseTests
@@ -13,7 +13,7 @@ from tasks import long_task, fibonacci_task, exception_func
 def fib(term):
     if term <= 1:
         return (term)
-    return (fib(term-1) + fib(term-2))
+    return (fib(term - 1) + fib(term - 2))
 
 
 class TasksTestCase(BaseTests):
