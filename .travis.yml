@@ -1,5 +1,9 @@
 install:
   - pip install -r requirements.txt
+addons:
+  apt:
+    packages:
+      - expect
 language: python
 python:
   - 3.6
@@ -7,7 +11,7 @@ script:
   - python -m pytest -v
   - flake8
 before_deploy:
-  - openssl aes-256-cbc -d -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out ./deploy_key
+  - openssl aes-256-cbc -d -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out /tmp/deploy_key
 #  # Make sure only the current user can read the private key
 #  - chmod 600 /tmp/deploy_key
 #  - chmod +x ./deploy.sh
@@ -21,12 +25,13 @@ before_deploy:
 ##  - bash ssh-password.sh
 #  - ssh -o LogLevel=ERROR -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 
-  - chmod 0400 ./deploy_key
-  - eval "$(ssh-agent -s)"
+#  - chmod 0400 ./deploy_key
+#  - eval "$(ssh-agent -s)"
 #  - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - ssh-add deploy_key <(echo "\n")
+#  - ssh-add deploy_key <(echo "\n")
   # test ssh connection for: https://github.com/dwyl/learn-travis/issues/42
-  - ssh -i ./deploy_key ubuntu@35.158.109.210 pwd
+  - bash ssh-password.sh
+  - ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 deploy:
   provider: script
   skip_cleanup: true
