@@ -6,15 +6,15 @@ from flask import render_template, request, jsonify, session
 from flask_socketio import SocketIO, join_room
 from random import randint
 
-import celeryconfig
+# import celeryconfig
 from __init__ import create_app
 
 
 flask_app = create_app()
 flask_app.secret_key = "DataRoadReflect"
 
-celery_app = Celery('demo', broker='redis://localhost:6379', include=['tasks'])
-celery_app.config_from_object(celeryconfig)
+# celery_app = Celery('demo', broker='redis://localhost:6379', include=['tasks'])
+# celery_app.config_from_object(celeryconfig)
 
 applogger = flask_app.logger
 socketio = SocketIO(flask_app, message_queue='redis://')
