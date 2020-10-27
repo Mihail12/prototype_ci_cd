@@ -12,13 +12,14 @@ before_deploy:
   - chmod 400 /tmp/deploy_key
   - chmod +x ./deploy.sh
   # Create a script to return the passphrase environment variable to ssh-add
-  - echo 'echo ${SSL_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
+#  - echo 'echo ${SSL_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
   # Start the authentication agent
   - eval "$(ssh-agent -s)"
   # Add the key to the authentication agent
-  - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/deploy_key
+#  - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/deploy_key </dev/null
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - ssh -i /tmp/deploy_key root@138.68.163.126 pwd
+  - ssh-add /tmp/deploy_key
+  - ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 deploy:
   provider: script
   skip_cleanup: true
