@@ -10,6 +10,6 @@ eval $(ssh-agent)
 expect << EOF
   spawn ssh-add $1
   expect "Enter passphrase"
-  send "\n"
+  send ""
   expect eof
 EOF
