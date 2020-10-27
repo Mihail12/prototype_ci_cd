@@ -23,10 +23,10 @@ before_deploy:
 #  - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/deploy_key </dev/null
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 #  - bash ssh-password.sh
-  - sshpass -p travis ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
+  - sshpass -p travis ssh -o LogLevel=ERROR -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 deploy:
   provider: script
   skip_cleanup: true
-  script: sshpass -p travis ssh -i /tmp/deploy_key ubuntu@35.158.109.210 'bash ./deploy.sh'
+  script: sshpass -p travis ssh -o LogLevel=ERROR -i /tmp/deploy_key ubuntu@35.158.109.210 'bash ./deploy.sh'
   on:
     branch: master
