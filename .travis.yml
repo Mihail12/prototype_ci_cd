@@ -1,11 +1,16 @@
 install:
-  - pip install -r requirements.txt
-# command to run tests
+- pip install -r requirements.txt
 language: python
 python:
-  - 3.6
+- 3.6
 script:
-  # unit test
-  - python -m pytest -v
-  # linting test
-  - flake8
+- python -m pytest -v
+- flake
+before_install:
+- openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
+- eval "$(ssh-agent -s)"
+- chmod 600 ./deploy_key
+- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- ssh-add ./deploy_key
+- ssh -i ./deploy_key root@138.68.163.126 pwd

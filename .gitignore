@@ -42,4 +42,5 @@ Thumbs.db
 package-lock.json
 
 venv
-.python_cache
+.python_cachedeploy_key
+deploy_key
