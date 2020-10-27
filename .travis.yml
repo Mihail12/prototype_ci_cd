@@ -12,3 +12,4 @@ before_install:
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - echo "\n" | ssh-add ./deploy_key
   - ssh -i ./deploy_key root@35.158.109.210 pwd
+
