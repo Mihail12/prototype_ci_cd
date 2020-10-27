@@ -30,7 +30,8 @@ before_deploy:
 #  - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 #  - ssh-add deploy_key <(echo "\n")
   # test ssh connection for: https://github.com/dwyl/learn-travis/issues/42
-  - bash ssh-password.sh
+  - chmod +x ssh-password.sh
+  - ssh-password /tmp/deploy_key
   - ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 deploy:
   provider: script
