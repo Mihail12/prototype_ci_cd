@@ -1,4 +1,5 @@
 install:
+  - apt-get install sshpass
   - pip install -r requirements.txt
 language: python
 python:
@@ -18,8 +19,8 @@ before_deploy:
   # Add the key to the authentication agent
 #  - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/deploy_key </dev/null
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - bash ssh-password.sh
-  - ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
+#  - bash ssh-password.sh
+  - sshpass -p travis ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 deploy:
   provider: script
   skip_cleanup: true
