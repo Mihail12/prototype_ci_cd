@@ -3,14 +3,16 @@ install:
 language: python
 python:
   - 3.6
-#before_install:
-#  - openssl aes-256-cbc -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out /tmp/deploy_key -d
-#  - chmod 600 /tmp/deploy_key
-#  - echo 'echo ${SSL_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
-#  - eval "$(ssh-agent -s)"
-#  - ssh-add /tmp/deploy_key </dev/null
-#  - echo -e "Host 35.158.109.210\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-#  - ssh -i /tmp/deploy_key root@35.158.109.210 pwd
+before_install:
+  - openssl aes-256-cbc -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out /tmp/deploy_key -
+  # Make sure only the current user can read the private key
+  - chmod 600 /tmp/deploy_key
+  # Create a script to return the passphrase environment variable to ssh-add
+  - echo 'echo ${SSL_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
+  # Start the authentication agent
+  - eval "$(ssh-agent -s)"
+  # Add the key to the authentication agent
+  - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/deploy_key </dev/null
 script:
   - python -m pytest -v
   - flake8

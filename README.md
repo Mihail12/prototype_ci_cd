@@ -50,4 +50,30 @@ then:
  after that you could exit from server  
  
 Then go to your project and copy the ssh-key:   
-`scp <user>@<server_ip>:/root/.ssh/id_rsa ./deploy_key`
+`scp <user>@<server_ip>:/root/.ssh/id_rsa ./deploy_key`  
+
+And Test That you are Able to Login to the Server:  
+`ssh -i ./deploy_key <user>@<server_ip>`  
+
+then Install Travis-CI CLI:  
+for example the command for linux `gem install travis` 
+
+Login to Travis with the CLI:
+`travis login`
+
+Add the environment variable SSH_PASSPHRASE to Travis with the value set during the SSH keys generation step:
+`travis env set SSH_PASSPHRASE <ssh_passphrase>`
+
+Encrypt the git_deploy_key (private key) using a symmetric encryption (AES-256), and store the secret in a secure environment variable in the Travis environment:
+`travis encrypt-file deploy_key`
+
+The travis encrypt-file will encrypt the private key into the deploy_key.enc file and output in the console the command to add to your .travis.yml file. It should look like openssl aes-256-cbc -K $encrypted_KKKKKKKKKKKK_key -iv $encrypted_VVVVVVVVVVVV_iv -in deploy_key.enc -out deploy_key -d
+
+then try this command:  
+openssl aes-256-cbc -e -p -in deploy_key -out deploy_key.enc -K `openssl rand -hex 32` -iv `openssl rand -hex 16`
+
+and from output get REPO_ENC_KEY and REPO_ENC_IV pass it to travis ci environment variables
+pass to .travis.yml in section before_install:  
+\- openssl aes-256-cbc -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out /tmp/deploy_key -d
+
+also add to git `deploy_key.enc` that travis has generated
