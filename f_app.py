@@ -45,7 +45,7 @@ user_4 = {
     'role': 'customer',
     'age': 65,
 }
-users = [user_1, user_2, user_3, user_4,]
+users = [user_1, user_2, user_3, user_4]
 
 
 @flask_app.route("/", methods=['GET'])
@@ -143,6 +143,7 @@ def on_room(*args, **kwargs):
 @socketio.on('join_room', namespace='/schedule_task')
 def on_room(*args, **kwargs):
     print('connected schedule_task')
+
 
 if __name__ == "__main__":
 
