@@ -45,7 +45,7 @@ user_4 = {
     'role': 'customer',
     'age': 65,
 }
-users = [user_1, user_2, user_3, user_4,]
+users = [user_1, user_2, user_3, user_4]
 
 
 @flask_app.route("/", methods=['GET'])
