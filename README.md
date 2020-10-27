@@ -34,4 +34,20 @@ apt-get install cpulimit
 
 cpulimit -l 20 -p 1234  
 
+start on windows:
 celery -A tasks worker -n celery_worker1 -l INFO --pool=gevent
+
+Travis CI
+--
+connect to the server you need to deploy:  
+`ssh <user>@<server_ip>`  
+then:  
+ `cd ~/.ssh`  
+ `ssh-keygen -t rsa -b 4096 -C "TravisCIDeployKey"`  
+ then set name for ssh-key by default and set passphrase(for example: `travis`)  
+ next:  
+ `cat id_rsa.pub >> authorized_keys`
+ after that you could exit from server  
+ 
+Then go to your project and copy the ssh-key:   
+`scp <user>@<server_ip>:/root/.ssh/id_rsa ./deploy_key`
