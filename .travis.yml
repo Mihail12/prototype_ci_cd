@@ -13,7 +13,7 @@ script:
 before_deploy:
   - openssl aes-256-cbc -d -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out /tmp/deploy_key
   # Make sure only the current user can read the private key
-  - chmod 400 /tmp/deploy_key
+  - chmod 600 /tmp/deploy_key
   - chmod +x ./deploy.sh
   # Create a script to return the passphrase environment variable to ssh-add
 #  - echo 'echo ${SSL_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
@@ -23,10 +23,10 @@ before_deploy:
 #  - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/deploy_key </dev/null
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 #  - bash ssh-password.sh
-  - sshpass -p travis ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
+#  - sshpass -p travis ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 deploy:
   provider: script
   skip_cleanup: true
-  script: ssh ubuntu@35.158.109.210 'bash ./deploy.sh'
+  script: sshpass -p travis ssh ubuntu@35.158.109.210 'bash ./deploy.sh'
   on:
     branch: master
