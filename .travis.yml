@@ -3,14 +3,14 @@ install:
 language: python
 python:
   - 3.6
-before_install:
-  - openssl aes-256-cbc -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out /tmp/deploy_key -d
-  - chmod 600 /tmp/deploy_key
-  - echo 'echo ${SSL_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
-  - eval "$(ssh-agent -s)"
-  - ssh-add /tmp/deploy_key </dev/null
-  - echo -e "Host 35.158.109.210\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - ssh -i /tmp/deploy_key root@35.158.109.210 pwd
+#before_install:
+#  - openssl aes-256-cbc -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out /tmp/deploy_key -d
+#  - chmod 600 /tmp/deploy_key
+#  - echo 'echo ${SSL_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
+#  - eval "$(ssh-agent -s)"
+#  - ssh-add /tmp/deploy_key </dev/null
+#  - echo -e "Host 35.158.109.210\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+#  - ssh -i /tmp/deploy_key root@35.158.109.210 pwd
 script:
   - python -m pytest -v
   - flake8
