@@ -7,4 +7,8 @@ env:
   - SERVER_IP_ADDRESS=35.158.109.210
 before_install:
   - openssl aes-256-cbc -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out deploy_key -d
-
+  - eval "$(ssh-agent -s)"
+  - chmod 600 ./deploy_key
+  - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - ssh-add ./deploy_key
+  - ssh -i ./deploy_key root@35.158.109.210 pwd
