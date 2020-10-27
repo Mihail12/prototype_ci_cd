@@ -16,8 +16,9 @@ before_deploy:
   # Start the authentication agent
   - eval "$(ssh-agent -s)"
   # Add the key to the authentication agent
-  - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/deploy_key </dev/null
-  - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - sshpass -p passphrase ssh-add /tmp/deploy_key
+#  - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/deploy_key </dev/null
+#  - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 deploy:
   provider: script
