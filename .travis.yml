@@ -11,19 +11,25 @@ script:
   - python -m pytest -v
   - flake8
 before_deploy:
-  - openssl aes-256-cbc -d -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out /tmp/deploy_key
-  # Make sure only the current user can read the private key
-  - chmod 600 /tmp/deploy_key
-  - chmod +x ./deploy.sh
-  # Create a script to return the passphrase environment variable to ssh-add
-#  - echo 'echo ${SSL_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
-  # Start the authentication agent
+  - openssl aes-256-cbc -d -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out ./deploy_key
+#  # Make sure only the current user can read the private key
+#  - chmod 600 /tmp/deploy_key
+#  - chmod +x ./deploy.sh
+#  # Create a script to return the passphrase environment variable to ssh-add
+##  - echo 'echo ${SSL_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
+#  # Start the authentication agent
+#  - eval "$(ssh-agent -s)"
+#  # Add the key to the authentication agent
+#  - ssh-add /tmp/deploy_key </dev/null
+#  - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+##  - bash ssh-password.sh
+#  - ssh -o LogLevel=ERROR -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
   - eval "$(ssh-agent -s)"
-  # Add the key to the authentication agent
-  - ssh-add /tmp/deploy_key </dev/null
+  - chmod 600 ./deploy_key
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-#  - bash ssh-password.sh
-  - ssh -o LogLevel=ERROR -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
+  - ssh-add ./deploy_key
+  # test ssh connection for: https://github.com/dwyl/learn-travis/issues/42
+  - ssh -i ./deploy_key ubuntu@35.158.109.210 pwd
 deploy:
   provider: script
   skip_cleanup: true
