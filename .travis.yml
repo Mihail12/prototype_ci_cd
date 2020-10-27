@@ -3,7 +3,10 @@ install:
 language: python
 python:
   - 3.6
-before_install:
+script:
+  - python -m pytest -v
+  - flake8
+before_deploy:
   - openssl aes-256-cbc -d -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out /tmp/deploy_key
   # Make sure only the current user can read the private key
   - chmod 600 /tmp/deploy_key
@@ -13,6 +16,9 @@ before_install:
   - eval "$(ssh-agent -s)"
   # Add the key to the authentication agent
   - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/deploy_key </dev/null
-script:
-  - python -m pytest -v
-  - flake8
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: ssh ubuntu@35.158.109.210 'bash ./deploy.sh'
+  on:
+    branch: master
