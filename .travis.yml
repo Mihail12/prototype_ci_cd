@@ -27,6 +27,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: sshpass -p travis ssh ubuntu@35.158.109.210 'bash ./deploy.sh'
+  script: sshpass -p travis ssh -i /tmp/deploy_key ubuntu@35.158.109.210 'bash ./deploy.sh'
   on:
     branch: master
