@@ -32,7 +32,7 @@ before_deploy:
   # test ssh connection for: https://github.com/dwyl/learn-travis/issues/42
   - chmod +x ssh-password.sh
   - bash ssh-password.sh /tmp/deploy_key
-  - ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
+#  - ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 deploy:
   provider: script
   skip_cleanup: true
