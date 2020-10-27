@@ -9,4 +9,6 @@ before_install:
   - chmod 600 ./deploy_key
   - echo -e "Host 35.158.109.210\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ssh -i ./deploy_key root@35.158.109.210 pwd
-
+script:
+  - python -m pytest -v
+  - flake8
