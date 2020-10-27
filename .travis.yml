@@ -20,6 +20,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: ssh ubuntu@35.158.109.210 'bash ./deploy.sh'
+  script: ssh ubuntu@$SERVER_IP_ADDRESS 'bash ./deploy.sh'
   on:
     branch: master
