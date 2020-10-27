@@ -1,6 +1,9 @@
 install:
-  - apt-get install sshpass
   - pip install -r requirements.txt
+addons:
+  apt:
+    packages:
+      - sshpass
 language: python
 python:
   - 3.6
