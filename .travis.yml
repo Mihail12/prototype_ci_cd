@@ -7,4 +7,4 @@ env:
   - SERVER_IP_ADDRESS=35.158.109.210
 script:
   - python -m pytest -v
-  - flake
+  - flake8
