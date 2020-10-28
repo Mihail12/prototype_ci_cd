@@ -61,9 +61,6 @@ for example the command for linux `gem install travis`
 Login to Travis with the CLI:
 `travis login`
 
-Add the environment variable SSH_PASSPHRASE to Travis with the value set during the SSH keys generation step:
-`travis env set SSH_PASSPHRASE <ssh_passphrase>`
-
 Encrypt the git_deploy_key (private key) using a symmetric encryption (AES-256), and store the secret in a secure environment variable in the Travis environment:
 `travis encrypt-file deploy_key`
 

@@ -1,8 +1,6 @@
 install:
   - pip install -r requirements.txt
 addons:
-  ssh_known_hosts:
-    - 35.158.109.210
   apt:
     packages:
       - expect
@@ -20,6 +18,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: bash ssh-password.sh deploy_key
+  script: bash ssh-password.sh
   on:
     branch: master
