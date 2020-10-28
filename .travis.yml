@@ -15,8 +15,8 @@ before_deploy:
   - chmod 600 ./deploy_key
   - eval "$(ssh-agent -s)"
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - echo ~/.ssh/config
-  - echo /etc/ssh/sshd_config
+  - cat ~/.ssh/config
+  - cat /etc/ssh/sshd_config
   - chmod +x ssh-password.sh
   - chmod 644 ~/.ssh/authorized_keys
 deploy:
