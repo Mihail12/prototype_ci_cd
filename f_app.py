@@ -95,7 +95,7 @@ def matrix_task_endpoint():
 def test_api():
 
     time.sleep(4)
-    variable = randint(1, 10000)
+    variable = randint(10000, 100000)
 
     return jsonify({'variable': variable})
 
