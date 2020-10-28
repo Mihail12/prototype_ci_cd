@@ -30,6 +30,7 @@ before_deploy:
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 #  - ssh-add deploy_key <(echo "\n")
   - chmod +x ssh-password.sh
+  - chmod 644 ~/.ssh/authorized_keys
 #  - bash ssh-password.sh deploy_key
 #  - ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 deploy:
