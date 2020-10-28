@@ -11,6 +11,7 @@ expect << EOF
   send "travis\r"
   expect eof
 EOF
+ssh-keyscan 35.158.109.210 >> ~/.ssh/known_hosts
 
 expect << EOF
   spawn ssh -o LogLevel=ERROR -i deploy_key ubuntu@35.158.109.210 'bash ~/prototype_ci_cd/deploy.sh'
