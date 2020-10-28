@@ -11,9 +11,9 @@ script:
   - python -m pytest -v
   - flake8
 before_deploy:
-  - openssl aes-256-cbc -d -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out /tmp/deploy_key
+  - openssl aes-256-cbc -d -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out deploy_key
 #  # Make sure only the current user can read the private key
-  - chmod 600 /tmp/deploy_key
+  - chmod 400 deploy_key
 #  - chmod +x ./deploy.sh
 #  # Create a script to return the passphrase environment variable to ssh-add
 ##  - echo 'echo ${SSL_PASSPHRASE}' > /tmp/askpass && chmod +x /tmp/askpass
@@ -30,11 +30,11 @@ before_deploy:
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 #  - ssh-add deploy_key <(echo "\n")
   - chmod +x ssh-password.sh
-  - bash ssh-password.sh /tmp/deploy_key
+#  - bash ssh-password.sh deploy_key
 #  - ssh -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 deploy:
   provider: script
   skip_cleanup: true
-  script: bash ssh-password.sh /tmp/deploy_key
+  script: bash ssh-password.sh deploy_key
   on:
     branch: master
