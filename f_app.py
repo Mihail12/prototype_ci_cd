@@ -95,9 +95,9 @@ def matrix_task_endpoint():
 def test_api():
 
     time.sleep(4)
-    variable = randint(100, 1000)
+    variable = randint(1000, 10000)
 
-    return jsonify({'variable': f'{variable} new'})
+    return jsonify({'variable': f'{variable} new one'})
 
 
 @socketio.on('connect', namespace='/managers')
