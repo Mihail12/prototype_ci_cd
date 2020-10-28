@@ -12,13 +12,11 @@ script:
   - flake8
 before_deploy:
   - openssl aes-256-cbc -d -K $REPO_ENC_KEY -iv $REPO_ENC_IV -in deploy_key.enc -out deploy_key
-  - chmod 600 ./deploy_key
-  - eval "$(ssh-agent -s)"
+#  - eval "$(ssh-agent -s)"
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - cat ~/.ssh/config
   - cat /etc/ssh/sshd_config
   - chmod +x ssh-password.sh
-  - chmod 644 ~/.ssh/authorized_keys
 deploy:
   provider: script
   skip_cleanup: true
