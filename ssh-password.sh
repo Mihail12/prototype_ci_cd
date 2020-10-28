@@ -6,7 +6,7 @@ if [ $# -ne 1 ] ; then
 fi
 
 expect << EOF
-  spawn ssh-add $1
+  spawn ssh -o LogLevel=ERROR -i /tmp/deploy_key ubuntu@35.158.109.210 'bash ~/prototype_ci_cd/deploy.sh'
   expect "Enter passphrase"
   send "travis\r"
   expect eof

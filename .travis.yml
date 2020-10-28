@@ -35,6 +35,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: ssh -o LogLevel=ERROR -i /tmp/deploy_key ubuntu@35.158.109.210 'bash ./deploy.sh'
+  script: bash ssh-password.sh /tmp/deploy_key
   on:
     branch: master
