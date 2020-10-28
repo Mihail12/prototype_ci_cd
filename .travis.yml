@@ -26,7 +26,7 @@ before_deploy:
 #  - ssh -o LogLevel=ERROR -i /tmp/deploy_key ubuntu@35.158.109.210 pwd
 
 #  - chmod 0400 ./deploy_key
-#  - eval "$(ssh-agent -s)"
+  - eval "$(ssh-agent -s)"
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 #  - ssh-add deploy_key <(echo "\n")
   - chmod +x ssh-password.sh
