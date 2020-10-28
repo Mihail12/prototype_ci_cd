@@ -12,12 +12,6 @@ expect << EOF
   expect eof
 EOF
 
-expect << EOF
-  spawn ssh-add deploy_key
-  expect "Enter passphrase"
-  send "travis\r"
-  expect eof
-EOF
 
 expect << EOF
   spawn ssh -i deploy_key ubuntu@35.158.109.210 pwd
