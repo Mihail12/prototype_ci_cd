@@ -5,11 +5,9 @@ if [ $# -ne 1 ] ; then
   exit 1
 fi
 
-eval $(ssh-agent)
-
 expect << EOF
   spawn ssh-add $1
   expect "Enter passphrase"
-  send ""
+  send "travis\r"
   expect eof
 EOF
